@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+     android:layout_height="match_parent"
+    android:layout_width="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="32dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Verify Your Phone Number"
+                android:textSize="24sp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:layout_marginBottom="16dp"
+                android:textColor="@color/black"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="RealChat Will send an SMS message to verify your phone number. Enter your country code and phone number."
+                android:gravity="center"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                />
+        </LinearLayout>
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="32dp"
+            >
+            <com.hbb20.CountryCodePicker
+                android:id="@+id/ccp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onCountryPickerClick"/>
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:hint="Phone"
+                android:inputType="phone"
+                android:maxLength="10"
+                android:id="@+id/phoneNumber"/>
+         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/root_otp_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:padding="10dp"
+            android:orientation="horizontal"
+            android:weightSum="6"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginBottom="8dp"
+            android:visibility="invisible">
+
+            <EditText
+                android:id="@+id/otp_edit_box1"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:gravity="center"
+                android:inputType="number"
+                android:layout_marginRight="10dp"
+                android:maxLength="1"
+                android:textSize="30sp"
+
+
+                android:background="@drawable/edittext_curve_bg"/>
+
+            <EditText
+                android:id="@+id/otp_edit_box2"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginRight="10dp"
+                android:gravity="center"
+                android:textSize="30sp"
+                android:inputType="number"
+                android:importantForAutofill="no"
+                android:maxLength="1"
+                android:background="@drawable/edittext_curve_bg"/>
+
+            <EditText
+                android:id="@+id/otp_edit_box3"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginRight="10dp"
+                android:gravity="center"
+                android:textSize="30sp"
+                android:inputType="number"
+                android:maxLength="1"
+                android:importantForAutofill="no"
+                android:background="@drawable/edittext_curve_bg"/>
+
+            <EditText
+                android:id="@+id/otp_edit_box4"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:gravity="center"
+                android:textSize="30sp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:inputType="number"
+                android:importantForAutofill="no"
+                android:maxLength="1"
+                android:background="@drawable/edittext_curve_bg" />
+            <EditText
+                android:id="@+id/otp_edit_box5"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginRight="10dp"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="1"
+                android:textSize="30sp"
+                android:importantForAutofill="no"
+                android:background="@drawable/edittext_curve_bg"
+                />
+            <EditText
+                android:id="@+id/otp_edit_box6"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginRight="10dp"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="1"
+                android:textSize="30sp"
+                android:importantForAutofill="no"
+                android:background="@drawable/edittext_curve_bg"/>
+
+
+        </LinearLayout>
+
+        <!--        <EditText-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:hint="Enter Code"-->
+<!--            android:id="@+id/code"/>-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/verification_failed"
+            android:text="Verification failed"
+            android:textSize="12dp"
+            android:layout_marginBottom="16dp"
+            android:layout_gravity="center"
+            android:textColor="#FF0000"
+            android:visibility="invisible"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/resend_code"
+            android:text="Resend Code"
+            android:layout_centerHorizontal="true"
+            android:textColor="#0000FF"
+
+            android:layout_gravity="center"
+            android:visibility="invisible"/>
+
+    </LinearLayout>
+
+<!--    <RelativeLayout-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@+id/root_otp_layout"-->
+<!--        android:layout_centerHorizontal="true"-->
+<!--        >-->
+
+<!--        <Button-->
+<!--            android:id="@+id/verify_otp_btn"-->
+<!--            android:background="@color/colorAccent"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:textSize="20sp"-->
+<!--            android:paddingLeft="10dp"-->
+<!--            android:paddingRight="10dp"-->
+<!--            android:layout_marginTop="30dp"-->
+<!--            android:textColor="#ffffff"-->
+<!--            android:text="Verify"-->
+<!--            android:layout_centerHorizontal="true"/>-->
+
+<!--    </RelativeLayout>-->
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Send Verification code"
+        android:id="@+id/send"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="16dp"
+        android:background="#54626f"
+        android:textColor="@color/white"
+        android:layout_centerHorizontal="true"
+        android:padding="8dp"/>
+
+</RelativeLayout>
