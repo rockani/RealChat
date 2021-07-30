@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +22,7 @@ import com.example.realchat.Chat.CreateChatActivity;
 import com.example.realchat.Contacts.ContactListActivity;
 import com.example.realchat.User.ConnectionModel;
 import com.example.realchat.User.ConnectionsListAdapter;
+import com.example.realchat.Utils.SendNotification;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,6 +31,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.onesignal.OneSignal;
 
 import java.util.ArrayList;
 
@@ -44,22 +47,31 @@ public class MainPageActivity extends AppCompatActivity {
     private ConnectionsListAdapter mConnectionsListAdapter;
     private  RecyclerView recyclerView;
     private DbHandler dbHandler;
+    public TextView makeConnections;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.connections_list);
         Intent intent =getIntent();
-
+        OneSignal.startInit(this).init();
+        OneSignal.setSubscription(true);
+        OneSignal.idsAvailable(new OneSignal.IdsAvailableHandler() {
+            @Override
+            public void idsAvailable(String userId, String registrationId) {
+                FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getUid()).child("notificationKey").setValue(userId);
+            }
+        });
+        OneSignal.setInFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification);
 
         getPermissions();
-
+        new SendNotification("Message1","Heading1",null);
         recyclerView = findViewById(R.id.Recyclerview);
         getConnectionsList();
         mConnectionsListAdapter = new ConnectionsListAdapter(ConnectionsList,MainPageActivity.this);
         recyclerView.setAdapter(mConnectionsListAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainPageActivity.this));
 
-
+        makeConnections = findViewById(R.id.make_connections);
         mContact = findViewById(R.id.getContacts);
         currUser = FirebaseAuth.getInstance().getCurrentUser();
 //        mLogout.setOnClickListener(new View.OnClickListener() {
@@ -91,6 +103,9 @@ public class MainPageActivity extends AppCompatActivity {
     private void getConnectionsList() {
         dbHandler = new DbHandler(MainPageActivity.this);
         ConnectionsList = dbHandler.readCourses();
+        if(ConnectionsList.isEmpty()){
+            makeConnections.setVisibility(View.VISIBLE);
+        }
 
     }
 
@@ -104,6 +119,7 @@ public class MainPageActivity extends AppCompatActivity {
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        OneSignal.setSubscription(false);
         FirebaseAuth.getInstance().signOut();
         startActivity(new Intent(getApplicationContext(),MainActivity.class));
         finish();
